@@ -7,6 +7,8 @@ ganze Farbspektrum wandern.
 
 ## Funktionen
 
+- 🖼️ **Echte Musik sofort, ohne Login** – Live-Charts mit echten Album-Covern, Künstlerfotos, Top-Alben & Playlists (Deezer, Ausweichquelle Apple/iTunes), animierte Cover-Wand
+- 💿 **Album-, Künstler- & Playlist-Seiten** – alles abspielen oder zufällig
 - 🔍 **Eine Suche für alles** – Treffer aller verbundenen Plattformen, nach Plattform filterbar
 - 🔗 **Link einfügen = abspielen** – Spotify-, YouTube-, SoundCloud-, Apple-Music- und Deezer-Links
 - 🎧 **Ein Player für alle** – Warteschlange, Zufall, Wiederholen, Lautstärke, Vollbild-Player, Leertaste = Play/Pause
@@ -27,7 +29,7 @@ gespeichert. Damit eine App das darf, muss sie bei jeder Plattform einmalig als 
 | **SoundCloud** | nichts – Link einfügen | volle Songs |
 | **YouTube** | Google OAuth Client-ID (+ optional API-Schlüssel) | volle Songs |
 | **Spotify** | Spotify Client-ID | volle Songs mit **Premium** |
-| **Apple Music** | Apple Developer-Token (Developer Program, 99 $/Jahr) | volle Songs mit Abo, sonst Hörproben |
+| **Apple Music** | Suche ohne Konto; für volle Songs Developer-Token (99 $/Jahr) | volle Songs mit Abo, sonst Hörproben |
 | Amazon Music, Tidal | – | nicht möglich, keine öffentliche Wiedergabe-API |
 
 ### Spotify

@@ -91,6 +91,24 @@ async function start(index: number) {
     previewOnly: track.provider === 'deezer',
   });
 
+  // Without an account for this platform, go straight to the free preview instead of failing first.
+  const provider = providerById[track.provider];
+  if (track.previewUrl && provider.requiresLogin && !provider.isConnected()) {
+    engine.stop();
+    player.set({ engine: previewEngine.id, previewOnly: true, durationMs: 30_000 });
+    try {
+      await previewEngine.load(track, s.volume);
+      if (seq !== loadSeq) return;
+      player.set({ loading: false });
+      addRecent(track);
+    } catch (e) {
+      if (seq !== loadSeq) return;
+      player.set({ loading: false, playing: false });
+      toast(errorMessage(e), 'error');
+    }
+    return;
+  }
+
   try {
     await engine.load(track, s.volume);
     if (seq !== loadSeq) return;

@@ -1,3 +1,4 @@
+import { itunesSearch } from '../lib/catalog';
 import { getConfig } from '../lib/config';
 import { loadScript } from '../lib/script';
 import { load, save } from '../lib/storage';
@@ -80,7 +81,7 @@ export const apple: Provider = {
   name: 'Apple Music',
   color: '#ff4f8b',
   tagline: 'Apple-Music-Katalog & deine Mediathek',
-  playbackNote: 'Volle Songs mit Apple-Music-Abo (Anmeldung mit deiner Apple-ID), sonst 30-Sekunden-Hörproben.',
+  playbackNote: 'Suche & 30-Sekunden-Hörproben sofort ohne Konto. Volle Songs mit Apple-Music-Abo (Anmeldung mit deiner Apple-ID).',
   setupSteps: [
     'Melde dich im Apple Developer Program an und erstelle unter „Keys“ einen MusicKit-Schlüssel.',
     'Erzeuge damit einen Developer-Token (JWT, ES256, max. 6 Monate gültig).',
@@ -91,7 +92,7 @@ export const apple: Provider = {
   libraryName: 'Apple Music – Mediathek',
   isConfigured: () => !!getConfig('appleDeveloperToken'),
   isConnected: () => authorized,
-  canSearch: () => authorized,
+  canSearch: () => true, // falls back to the public iTunes catalog without login
 
   async connect() {
     const mk = await ensureMusicKit();
@@ -113,6 +114,7 @@ export const apple: Provider = {
   },
 
   async search(q) {
+    if (!authorized) return itunesSearch(q);
     const mk = await ensureMusicKit();
     const sf = mk.storefrontId || 'de';
     const res = await mk.api.music(`/v1/catalog/${sf}/search`, { term: q, types: 'songs', limit: 20 });

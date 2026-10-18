@@ -10,12 +10,13 @@ import { HomeIcon, LibraryIcon, LinkIcon, SearchIcon } from './components/Icons'
 import { useStore } from './lib/store';
 import { togglePlay } from './player/player';
 import { go, ui } from './state/ui';
+import { CollectionView } from './views/CollectionView';
 import { Connect } from './views/Connect';
 import { Home } from './views/Home';
 import { Library } from './views/Library';
 import { Search } from './views/Search';
 
-const VIEWS = { home: Home, search: Search, library: Library, connect: Connect };
+const VIEWS = { home: Home, search: Search, library: Library, connect: Connect, collection: CollectionView };
 
 function MobileNav() {
   const view = useStore(ui, (s) => s.view);
@@ -39,6 +40,7 @@ function MobileNav() {
 
 export function App() {
   const view = useStore(ui, (s) => s.view);
+  const collectionKey = useStore(ui, (s) => s.collection?.id);
   const View = VIEWS[view];
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export function App() {
       <header className="mobile-top">
         <Logo />
       </header>
-      <main className="main" key={view}>
+      <main className="main" key={view === 'collection' ? `c-${collectionKey}` : view}>
         <View />
       </main>
       <QueuePanel />

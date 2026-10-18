@@ -782,3 +782,89 @@ h2 .provider-badge i { width: 11px; height: 11px; }
   .led-blob, .orb, .led-strip, .logo-pulse, .np-ring { animation: none !important; }
   .main, .now-playing { animation: none; }
 }
+
+/* ---------------------------------------------------------------- real-music visuals */
+
+.view > .hero { min-height: 320px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.hero-text { max-width: 620px; }
+.hero-now { color: var(--text-dim); margin: 4px 0 0; }
+.hero-now strong { color: var(--text); }
+
+.cover-wall {
+  position: absolute;
+  inset: -40px -20px -40px auto;
+  width: 52%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  transform: rotate(-10deg) translateX(8%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 85%, transparent 100%);
+  opacity: 0.85;
+  pointer-events: none;
+}
+.cover-wall.empty { display: none; }
+.cover-col { display: flex; flex-direction: column; gap: 12px; animation: wall-up 60s linear infinite; }
+.cover-col.c1 { animation-direction: reverse; animation-duration: 75s; }
+.cover-col.c2 { animation-duration: 68s; }
+.cover-col img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px hsl(var(--hue) 100% 60% / 0.18);
+}
+@keyframes wall-up { to { transform: translateY(-50%); } }
+.hero-text { z-index: 1; grid-column: 1; }
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(8, 7, 14, 0.92) 0%, rgba(8, 7, 14, 0.75) 45%, transparent 75%);
+  pointer-events: none;
+}
+.hero > .hero-text { position: relative; z-index: 2; }
+
+/* artists are round */
+.coll-artist .card-art .artwork { border-radius: 50%; }
+.coll-artist .card-art .artwork { box-shadow: 0 0 0 2px hsl(var(--hue) 100% 60% / 0.25), 0 10px 30px rgba(0, 0, 0, 0.5); }
+.coll-artist { text-align: center; align-items: center; }
+.coll-artist .card-play { right: 6px; bottom: 6px; }
+
+/* album / artist / playlist page */
+.coll-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  padding: 56px 32px 32px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid hsl(var(--hue) 100% 60% / 0.2);
+  background: rgba(10, 9, 18, 0.6);
+}
+.coll-backdrop {
+  position: absolute;
+  inset: -20%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(60px) saturate(170%) brightness(0.5);
+}
+.coll-back { position: absolute; top: 12px; left: 12px; z-index: 2; background: rgba(0, 0, 0, 0.35); }
+.coll-cover { position: relative; width: 220px; flex: none; }
+.coll-cover .artwork { border-radius: 16px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px var(--led-soft); }
+.coll-artist .coll-cover .artwork { border-radius: 50%; }
+.coll-info { position: relative; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.coll-info h1 { font-size: clamp(28px, 5vw, 56px); line-height: 1.05; overflow-wrap: anywhere; }
+.coll-info p { margin: 0; }
+
+@media (max-width: 820px) {
+  .cover-wall { width: 100%; inset: -40px; opacity: 0.35; transform: rotate(-10deg); }
+  .hero::after { background: rgba(8, 7, 14, 0.55); }
+  .coll-hero { flex-direction: column; align-items: flex-start; padding: 52px 20px 22px; gap: 18px; }
+  .coll-cover { width: 160px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover-col { animation: none !important; }
+}
